@@ -1,6 +1,6 @@
-struct Node {
+template <typename T> struct Node {
 public:
-  int data;
+  T data;
   Node *next;
-  Node(int data) { this->data = data; }
+  Node(T data) { this->data = data; }
 };
