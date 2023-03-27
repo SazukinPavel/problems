@@ -121,6 +121,17 @@ public:
       root = prevNode;
     }
   }
+  Node<T> *operator[](int index) {
+    Node<T> *curr=root;
+    while(index!=0){
+      if(curr==nullptr){
+        return nullptr;
+      }
+      curr=curr->next;
+      index--;
+    }
+    return curr;
+  }
 };
 
 int main() {
@@ -135,17 +146,9 @@ int main() {
     list.push(4);
     list.push(5);
     list.push(6);
-    Node<int> *curr = list.getRoot();
-    while (curr) {
-      cout << " el " << curr->data << "\n";
-      curr = curr->next;
-    }
-    list.reverse();
-    curr = list.getRoot();
-    while (curr) {
-      cout << " el " << curr->data << "\n";
-      curr = curr->next;
-    }
+    cout << " list[4] " << list[4]->data << "\n";
+    cout << " list[10] " << list[10] << "\n";
+    cout << " list[1] " << list[1]->data << "\n";
   } catch (const char *error) {
     cout << "External execption: " << error << std::endl;
   }
