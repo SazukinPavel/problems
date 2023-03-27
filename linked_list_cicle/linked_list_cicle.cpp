@@ -3,11 +3,13 @@
 //Return true if there is a cycle in the linked list. Otherwise, return false.
 
 //  Definition for singly-linked list.
-  struct ListNode {
+  #include <iostream>
+struct ListNode {
       int val;
       ListNode *next;
       ListNode(int x) : val(x), next(nullptr) {}
-  };
+      ListNode(int x,ListNode* next) : val(x), next(next) {}
+};
 
   class Solution {
     public:
@@ -30,3 +32,15 @@
         return false;
       };
   };
+
+  int main(){
+    Solution soluttion;
+    ListNode *list=new ListNode(1,new ListNode(2,new ListNode(3,new ListNode(4,new ListNode(5,new ListNode(6,new ListNode(7,new ListNode(8))))))));
+    ListNode* curr=list;
+    for(int i(0);i<4;i++){
+      curr=curr->next;
+    }
+    curr->next=list;
+
+    std::cout << soluttion.hasCycle(list);
+  }
