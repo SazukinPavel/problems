@@ -28,10 +28,6 @@ public:
     root = nullptr;
     last = nullptr;
   };
-  ~List() {
-    delete root;
-    delete last;
-  };
   int count() { return this->nodesCount; }
   Node<T> *getRoot() { return root; };
   void push(T data) {
@@ -108,6 +104,23 @@ public:
     return false;
   }
   bool is_empty() { return root == nullptr; };
+  void reverse() {
+    if (root != nullptr) {
+      Node<T> *prevNode = root;
+      Node<T> *curNode = root->next;
+
+      prevNode->next = nullptr;
+
+      while (curNode != nullptr) {
+        Node<T> *tempNode = curNode->next;
+        curNode->next = prevNode;
+        prevNode = curNode;
+        curNode = tempNode;
+      }
+
+      root = prevNode;
+    }
+  }
 };
 
 int main() {
@@ -122,30 +135,17 @@ int main() {
     list.push(4);
     list.push(5);
     list.push(6);
-    list.unshift(7);
-    cout << " count " << list.count() << "\n";
-    cout << " pop " << list.pop() << "\n";
-    cout << " shift " << list.shift() << "\n";
-    cout << " count " << list.count() << "\n";
-    cout << " find 4 " << list.find(4) << "\n";
-    cout << " find 666 " << list.find(666) << "\n";
-    cout << "LIST TYPE STRING"
-         << "\n";
-    List<std::string> list2(10);
-    cout << " is empty " << list2.is_empty() << "\n";
-    list2.push("some 1");
-    list2.push("some 2");
-    list2.push("some 3");
-    list2.push("some 4");
-    list2.push("some 5");
-    list2.push("some 6");
-    list2.unshift("some 7");
-    cout << " count " << list2.count() << "\n";
-    cout << " pop " << list2.pop() << "\n";
-    cout << " shift " << list2.shift() << "\n";
-    cout << " count " << list2.count() << "\n";
-    cout << " find some 4 " << list2.find("some 4") << "\n";
-    cout << " find some666 " << list2.find("some666") << "\n";
+    Node<int> *curr = list.getRoot();
+    while (curr) {
+      cout << " el " << curr->data << "\n";
+      curr = curr->next;
+    }
+    list.reverse();
+    curr = list.getRoot();
+    while (curr) {
+      cout << " el " << curr->data << "\n";
+      curr = curr->next;
+    }
   } catch (const char *error) {
     cout << "External execption: " << error << std::endl;
   }
