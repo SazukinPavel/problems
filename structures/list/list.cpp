@@ -122,12 +122,12 @@ public:
     }
   }
   Node<T> *operator[](int index) {
-    Node<T> *curr=root;
-    while(index!=0){
-      if(curr==nullptr){
+    Node<T> *curr = root;
+    while (index != 0) {
+      if (curr == nullptr) {
         return nullptr;
       }
-      curr=curr->next;
+      curr = curr->next;
       index--;
     }
     return curr;
