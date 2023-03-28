@@ -28,6 +28,15 @@ public:
     root = nullptr;
     last = nullptr;
   };
+  ~List() {
+    cout << "list destructor" << "\n";
+    Node<T> *curr = root;
+    while (curr) {
+      Node<T> *next = curr->next;
+      delete curr;
+      curr = next;
+    }
+  }
   int count() { return this->nodesCount; }
   Node<T> *getRoot() { return root; };
   void push(T data) {
@@ -134,7 +143,7 @@ public:
   }
 };
 
-int main() {
+void som(){
   try {
     cout << "LIST TYPE INTEGER"
          << "\n";
@@ -152,4 +161,9 @@ int main() {
   } catch (const char *error) {
     cout << "External execption: " << error << std::endl;
   }
+}
+
+int main() {
+  som();
+  som();
 }
