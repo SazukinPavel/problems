@@ -141,13 +141,13 @@ int main() {
     List<int> list(10);
     cout << " is empty " << list.is_empty() << "\n";
     list.push(1);
-    list.push(2);
+    list.push(4);
     list.push(3);
     list.push(4);
-    list.push(5);
+    list.push(4);
     list.push(6);
     cout << " list[4] " << list[4]->data << "\n";
-    cout << " list[10] " << list[10] << "\n";
+    cout << " list[2] " << list[2]->data << "\n";
     cout << " list[1] " << list[1]->data << "\n";
   } catch (const char *error) {
     cout << "External execption: " << error << std::endl;
