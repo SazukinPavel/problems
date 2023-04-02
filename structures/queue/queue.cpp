@@ -1,4 +1,4 @@
-// STACK
+// QUEUE
 #include "node.cpp"
 #include <iostream>
 #include <map>
@@ -25,11 +25,10 @@ public:
     Node<T> *newNode = new Node<T>(data);
     if (this->head == nullptr) {
       this->head = newNode;
-      this->tail = newNode;
     } else {
       this->tail->next = newNode;
-      this->tail = newNode;
     }
+    this->tail = newNode;
     this->size++;
   }
 
@@ -83,12 +82,12 @@ int main() {
   cout << "queue is_empty " << (queue->is_empty() ? "true" : "false") << "\n";
   cout << "queue is_full " << (queue->is_full() ? "true" : "false") << "\n";
   cout << "queue peek " << queue->peek() << "\n";
-  cout << "queue pop " << queue->dequeue() << "\n";
-  cout << "queue pop " << queue->dequeue() << "\n";
-  cout << "queue pop " << queue->dequeue() << "\n";
-  cout << "queue pop " << queue->dequeue() << "\n";
-  cout << "queue pop " << queue->dequeue() << "\n";
-  cout << "queue pop " << queue->dequeue() << "\n";
+  cout << "queue dequeue " << queue->dequeue() << "\n";
+  cout << "queue dequeue " << queue->dequeue() << "\n";
+  cout << "queue dequeue " << queue->dequeue() << "\n";
+  cout << "queue dequeue " << queue->dequeue() << "\n";
+  cout << "queue dequeue " << queue->dequeue() << "\n";
+  cout << "queue dequeue " << queue->dequeue() << "\n";
   cout << "queue is_empty " << (queue->is_empty() ? "true" : "false") << "\n";
   cout << "queue is_full " << (queue->is_full() ? "true" : "false") << "\n";
   cout << "print queue"
