@@ -102,6 +102,44 @@ public:
       this->size++;
     }
   }
+  void insert(int index, T data) {
+    if (index < 0 || index > this->size) {
+      throw "Cannot access node in that index ";
+    }
+
+    if (index == 0) {
+      return this->push_front(data);
+    } else if (index == this->size) {
+      return this->push_back(data);
+    } else {
+      Node<T> *slow = this->front;
+      Node<T> *fast = this->front->next;
+
+      while (fast) {
+        slow = fast;
+        fast = fast->next;
+      }
+
+      slow->next = new Node<T>(data);
+      slow->next->next = fast;
+    }
+  }
+  void remove(T data) {
+    Node<T> *slow = nullptr;
+    Node<T> *fast = this->front;
+    while (fast) {
+      if (fast && fast->data == data) {
+        if (slow == nullptr) {
+          this->front = fast->next;
+        } else {
+          slow->next = fast->next;
+        }
+      }
+
+      slow = fast;
+      fast = fast->next;
+    }
+  }
   bool find(T data) {
     Node<T> *curNode = this->front;
     while (curNode != nullptr) {
@@ -181,6 +219,40 @@ int main() {
   cout << " pop front " << list.pop_front() << "\n";
   cout << " pop pop_back " << list.pop_back() << "\n";
   cout << " pop pop_back " << list.pop_back() << "\n";
+  cout << " print list "
+       << "\n";
+  curr = list.get_front();
+  while (curr) {
+    cout << curr->data << "\t";
+    curr = curr->next;
+  }
+  cout << "\n insert 5 at 2"
+       << "\n";
+  list.insert(2, 5);
+  cout << " insert -10 at 0 "
+       << "\n";
+  list.insert(0, -10);
+  cout << " insert 100 at 2 "
+       << "\n";
+  list.insert(2, 100);
+  cout << " print list "
+       << "\n";
+  curr = list.get_front();
+  while (curr) {
+    cout << curr->data << "\t";
+    curr = curr->next;
+  }
+  cout << "\n remove 5 "
+       << "\n";
+  list.remove(5);
+  cout << " remove -10 "
+       << "\n";
+  list.remove(-10);
+  cout << " remove 100"
+       << "\n";
+  list.remove(100);
+  cout << " print list "
+       << "\n";
   cout << " print list "
        << "\n";
   curr = list.get_front();
