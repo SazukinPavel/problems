@@ -1,4 +1,4 @@
-// LIST
+// LINKED LIST
 #include "node.cpp"
 #include <iostream>
 #include <map>
