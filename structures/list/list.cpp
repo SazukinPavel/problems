@@ -7,104 +7,104 @@ using std::cout;
 
 template <typename T> class List {
 private:
-  Node<T> *root;
-  Node<T> *last;
-  int nodesCount{0};
+  Node<T> *front;
+  Node<T> *back;
+  int size{0};
   int capacity{10};
 
   void init(T data) {
-    root = new Node(data);
-    last = root;
-    nodesCount++;
+    this->front = new Node(data);
+    this->back = this->front;
+    this->size++;
   }
 
 public:
   List() {
-    root = nullptr;
-    last = nullptr;
+    this->front = nullptr;
+    this->back = nullptr;
   };
   List(int capasity) {
     this->capacity = capasity;
-    root = nullptr;
-    last = nullptr;
+    this->front = nullptr;
+    this->back = nullptr;
   };
   ~List() {
-    cout << "list destructor" << "\n";
-    Node<T> *curr = root;
+    Node<T> *curr = this->front;
     while (curr) {
       Node<T> *next = curr->next;
       delete curr;
       curr = next;
     }
   }
-  int count() { return this->nodesCount; }
-  Node<T> *getRoot() { return root; };
-  void push(T data) {
+  int count() { return this->size; }
+  Node<T> *get_front() { return this->front; };
+  Node<T> *get_back() { return this->back; };
+  void push_back(T data) {
     if (this->count() > capacity) {
       throw "Capacity error";
     }
 
-    if (is_empty()) {
-      init(data);
+    if (this->is_empty()) {
+      this->init(data);
     } else {
       Node<T> *tempNode = new Node(data);
-      last->next = tempNode;
-      last = tempNode;
-      nodesCount++;
+      this->back->next = tempNode;
+      this->back = tempNode;
+      this->size++;
     }
   }
-  T pop() {
-    if (is_empty()) {
+  T pop_back() {
+    if (this->is_empty()) {
       throw "List is empty!";
     }
 
-    if (last == root) {
-      return shift();
+    if (this->back == this->front) {
+      return this->pop_front();
     }
 
-    Node<T> *curNode = root;
-    while (curNode->next != last)
+    Node<T> *curNode = this->front;
+
+    while (curNode->next != this->back)
       curNode = curNode->next;
-
-    T data = last->data;
-    delete last;
-    last = curNode;
-    last->next = nullptr;
-    nodesCount--;
+    T data = this->back->data;
+    delete this->back;
+    this->back = curNode;
+    this->back->next = nullptr;
+    this->size--;
 
     return data;
-  };
-  T shift() {
-    if (is_empty()) {
+  }
+  T pop_front() {
+    if (this->is_empty()) {
       throw "List is empty!";
     }
 
-    T data = root->data;
+    T data = this->front->data;
 
-    Node<T> *temp = root;
-    root = temp->next;
+    Node<T> *temp = this->front;
+    this->front = temp->next;
     delete temp;
-    nodesCount--;
+    this->size--;
 
     return data;
   };
-  void unshift(T data) {
-    if (this->count() > capacity) {
+  void push_front(T data) {
+    if (this->count() > this->capacity) {
       throw "Capacity error";
     }
 
-    if (is_empty()) {
-      init(data);
+    if (this->is_empty()) {
+      this->init(data);
     } else {
       Node<T> *newNode = new Node(data);
-      newNode->next = root;
-      root = newNode;
-      nodesCount++;
+      newNode->next = this->front;
+      this->front = newNode;
+      this->size++;
     }
   }
   bool find(T data) {
-    Node<T> *curNode = root;
-    while (curNode != last) {
+    Node<T> *curNode = this->front;
+    while (curNode != nullptr) {
       if (data == curNode->data) {
         return true;
       }
@@ -112,11 +112,11 @@ public:
     }
     return false;
   }
-  bool is_empty() { return root == nullptr; };
+  bool is_empty() { return this->front == nullptr; };
   void reverse() {
-    if (root != nullptr) {
-      Node<T> *prevNode = root;
-      Node<T> *curNode = root->next;
+    if (this->front != nullptr) {
+      Node<T> *prevNode = this->front;
+      Node<T> *curNode = this->front->next;
 
       prevNode->next = nullptr;
 
@@ -127,43 +127,65 @@ public:
         curNode = tempNode;
       }
 
-      root = prevNode;
+      this->front = prevNode;
     }
   }
-  Node<T> *operator[](int index) {
-    Node<T> *curr = root;
+  T operator[](int index) {
+    Node<T> *curr = this->front;
     while (index != 0) {
       if (curr == nullptr) {
-        return nullptr;
+        return T();
       }
       curr = curr->next;
       index--;
     }
-    return curr;
+    return curr->data;
   }
 };
 
-void som(){
-  try {
-    cout << "LIST TYPE INTEGER"
-         << "\n";
-    List<int> list(10);
-    cout << " is empty " << list.is_empty() << "\n";
-    list.push(1);
-    list.push(4);
-    list.push(3);
-    list.push(4);
-    list.push(4);
-    list.push(6);
-    cout << " list[4] " << list[4]->data << "\n";
-    cout << " list[2] " << list[2]->data << "\n";
-    cout << " list[1] " << list[1]->data << "\n";
-  } catch (const char *error) {
-    cout << "External execption: " << error << std::endl;
-  }
-}
-
 int main() {
-  som();
-  som();
+
+  cout << "LIST TYPE INTEGER"
+       << "\n";
+  List<int> list(10);
+  cout << " is empty " << (list.is_empty() ? "true" : "false") << "\n";
+  cout << " count " << (list.count()) << "\n";
+  cout << " push_back 1 "
+       << "\n";
+  list.push_back(1);
+  cout << " push_back 2 "
+       << "\n";
+  list.push_back(2);
+  cout << " push_front 3 "
+       << "\n";
+  list.push_front(3);
+  cout << " push_back 4 "
+       << "\n";
+  list.push_back(4);
+  cout << " push_front 5 "
+       << "\n";
+  list.push_front(5);
+  cout << " count " << (list.count()) << "\n";
+  cout << " print list "
+       << "\n";
+  Node<int> *curr = list.get_front();
+  while (curr) {
+    cout << curr->data << "\t";
+    curr = curr->next;
+  }
+  cout << "\n list[1] " << list[1] << "\n";
+  cout << "list[10] " << list[10] << "\n";
+  cout << "find 3 " << (list.find(3) ? "true" : "false") << "\n";
+  cout << "find 23 " << (list.find(23) ? "true" : "false") << "\n";
+
+  cout << " pop front " << list.pop_front() << "\n";
+  cout << " pop pop_back " << list.pop_back() << "\n";
+  cout << " pop pop_back " << list.pop_back() << "\n";
+  cout << " print list "
+       << "\n";
+  curr = list.get_front();
+  while (curr) {
+    cout << curr->data << "\t";
+    curr = curr->next;
+  }
 }
