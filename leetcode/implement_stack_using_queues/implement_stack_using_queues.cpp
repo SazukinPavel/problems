@@ -1,4 +1,4 @@
-// Implement a last-in-first-out (LIFO) stack using only two queues. 
+// Implement a last-in-first-out (LIFO) stack using only two queues.
 // The implemented stack should support all the functions of a normal stack (push, top, pop, and empty).
 
 // Implement the MyStack class:
@@ -10,7 +10,7 @@
 // Notes:
 
 // You must use only standard operations of a queue, which means that only push to back, peek/pop from front, size and is empty operations are valid.
-// Depending on your language, the queue may not be supported natively. 
+// Depending on your language, the queue may not be supported natively.
 // You may simulate a queue using a list or deque (double-ended queue) as long as you use only a queue's standard operations.
 
 #include "queue";
@@ -18,29 +18,23 @@ using namespace std;
 
 class MyStack
 {
-    private:
+private:
     queue<int> q;
-public:
-    
-    MyStack()
-    {
-        
-    }
 
+public:
     void push(int x)
     {
         q.push(x);
-        for (size_t i = 0; i < q.size(); i++)
+        for (size_t i = 0; i < q.size() - 1; i++)
         {
             q.push(q.front());
             q.pop();
         }
-        
     }
 
     int pop()
     {
-        int val=q.front();
+        int val = q.front();
         q.pop();
         return val;
     }
@@ -52,7 +46,7 @@ public:
 
     bool empty()
     {
-        return q.size();
+        return q.empty();
     }
 };
 
